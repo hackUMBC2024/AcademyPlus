@@ -1,0 +1,112 @@
+<template>
+  <div class="login-container">
+    <form @submit.prevent="handleLogin">
+      <h1 id="signin">Sign in</h1>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          v-model="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          required
+        />
+      </div>
+      <div>
+
+      </div>
+      <RouterLink to="/search"><button type="submit" >Login</button></RouterLink>
+    </form>
+  </div>
+</template>
+
+<script>
+import { RouterLink } from 'vue-router';
+export default {
+  data() {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    handleLogin() {
+      console.log('Username:', this.username)
+      console.log('Password:', this.password)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#signin {
+  text-align: left;
+  justify-content: left;
+}
+
+form {
+  background: var(--color-background-soft);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 20rem;
+}
+
+h1 {
+  color: var(--color-heading);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-text);
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: var(--color-border-hover);
+}
+
+button {
+  padding:1rem;
+  width: 100%;
+  background-color: var(--color-accent);
+  color: var(--color-text);
+  border: none;
+  border-radius: 0.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--color-accent-dark);
+}
+</style>

@@ -109,13 +109,18 @@ export default {
         return;
       }
 
+      let global = useGlobalStore();
+      global.isLoggedIn = false;
+      global.username = "test";
+
       console.log("Success code:" + response.success);
       console.log("Success content: " + response.content);
+
+      this.$router.push({ path: "/"});
     }
   },
   computed: {
     ...mapStores(useGlobalStore)
-
   }
 };
 </script>

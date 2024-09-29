@@ -5,8 +5,8 @@ export const useGlobalStore = defineStore("global", {
     state: () => {
         return {
             version: "1.1.0",
-            isLoggedIn: true,
-            username: "Greg",
+            isLoggedIn: false,
+            username: "Test",
             currentTitles: []
         }
     },

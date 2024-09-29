@@ -29,6 +29,9 @@
 </template>
 
 <script>
+import { mapStores } from "pinia";
+import { useGlobalStore } from "@/stores/store";
+
 export default {
   data() {
     return {
@@ -52,16 +55,43 @@ export default {
       if(response.error) {
         console.log("Error code: " + response.error);
         console.log("Error content: " + response.content);
+
+        if(response.content == "Already logged in") {
+          this.$router.push({ path: "/search"});
+        }
         //Handle Error here figure it out
         return;
       }
 
-
+      
       console.log("Success code:" + response.success);
       console.log("Success content: " + response.content);
 
-      this.$router.push({ path: "/", query: { search: this.searchQuery } });
+      console.log(response);
+
+      let global = useGlobalStore();
+      global.username = response.username;
+      global.isLoggedIn = true;
+
+      let userFetchRespone = await fetch("/api/userdata");
+      let responseSecond = await userFetchRespone.json();
+      
+      console.log(responseSecond);
+
+      if(responseSecond.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
+        //Handle Error here figure it out 
+        return;
+      }
+
+      global.username = responseSecond.username;
+
+      this.$router.push({ path: "/search"});
     },
+  },
+  computed: {
+    ...mapStores(useGlobalStore)
   }
 }
 </script>

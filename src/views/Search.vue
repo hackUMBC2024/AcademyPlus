@@ -87,7 +87,6 @@ export default {
       if(response.error) {
         console.log("Error code: " + response.error);
         console.log("Error content: " + response.content);
-        //Handle Error here figure it out 
         return;
       }
 

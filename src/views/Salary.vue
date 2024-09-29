@@ -1,41 +1,53 @@
 <template>
-    <div id="salary">
-        <h1>Career Projections</h1>
-        <h2>Career Option 1</h2>
-        <p>$103,450</p>
-        <h2>Career Option 2</h2>
-        <p>$145,450</p>
-        <h2>Career Option 3</h2>
-        <p>$160,450</p>
-    </div>
+      <h1>Career Projections</h1>
+  <div id="salary">
+    <Bar
+      id="my-chart-id"
+      :options="chartOptions"
+      :data="chartData"
+      width="999px"
+    />
+  </div>
 </template>
 
 <script>
-import { mapStores } from 'pinia';
-import { useGlobalStore } from '@/stores/store';
+import { mapStores } from "pinia";
+import { useGlobalStore } from "@/stores/store";
+import { Bar } from 'vue-chartjs';
 
 export default {
+  name: 'BarChart',
+  components: { Bar },
   data() {
     return {
-        
+      chartData: {
+        labels: ['Career #1', 'Career #2', 'Career #3'],
+        datasets: [
+          {
+            label: 'Projected Salary',
+            data: [40, 20, 12],
+            backgroundColor: 'rgba(62, 156, 53, 0.6)', 
+            borderColor: 'rgba(62, 156, 53, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      chartOptions: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
     };
   },
   computer: {
-    ...mapStores(useGlobalStore)
+    ...mapStores(useGlobalStore),
   }
-}
+};
 </script>
 
 <style scoped>
-#salary {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 20px;
-}
 
-#salary > p {
-    font-weight: bold;
-    color: 	#3e9c35;
-}
 </style>

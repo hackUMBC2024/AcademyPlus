@@ -127,8 +127,7 @@ Note: These practice problems are intended to give you a sense of what to expect
     computed: {
         markdownToHtml() {
             const options = {
-                render: (formula , displayMode) => {
-                    console.log(formula)
+                render: (formula , _displayMode) => {
                     return Katex.renderToString(formula, { displayMode: true, output: 'mathml' });
                 }
             };
@@ -144,6 +143,7 @@ Note: These practice problems are intended to give you a sense of what to expect
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow-y: hidden;
 }
 #course-name {
     height: 20vw;
@@ -203,13 +203,14 @@ Note: These practice problems are intended to give you a sense of what to expect
 }
 </style>
 <style>
-#app:has(#parent) {
+#app:has(#vertical-parent) {
   padding: 1rem .5rem !important;
   margin: 0 !important;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
+  max-width: fit-content !important;
 }
-body:has(#parent) {
+body:has(#vertical-parent) {
   margin: 0 auto;
 }
 </style>

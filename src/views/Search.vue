@@ -1,12 +1,22 @@
 <template>
   <div class="about">
+    <div id="userContent">
+      <div v-if="!loggedIn">
+        <RouterLink to="/">login</RouterLink>
+        or
+        <RouterLink to="/signup">sign up</RouterLink>
+      </div>
+      <div v-else>
+        <p>@john</p>
+      </div>
+    </div>
     <div class="form-group">
       <input
-        placeholder="Search...."
+        placeholder="Intro to Javascript...."
         v-model="searchQuery"
         required
+        @keyup.enter="searchClicked"
       />
-      <button @click="search">Search</button>
     </div>
   </div>
 </template>
@@ -16,12 +26,14 @@ export default {
   data() {
     return {
       searchQuery: '',
+      loggedIn: true,
     };
   },
   methods: {
-    search() {
+    searchClicked() {
+      console.log("Search Clicked");
       this.$router.push({ path: '/map', query: { search: this.searchQuery } });
-    },
+    }
   },
 };
 </script>
@@ -38,13 +50,21 @@ h1 {
   text-align: center;
 }
 
+#userContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
 input {
-  width: 20rem;
-  padding: 8px;
+  width: 30rem;
+  padding: 10px;
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: 40px;
   box-sizing: border-box;
   transition: border-color 0.3s;
+  font-weight: bold;
 }
 
 input:focus {

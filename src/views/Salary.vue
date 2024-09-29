@@ -11,7 +11,11 @@
 </template>
 
 <script>
-
+data() {
+    return {
+        
+    };
+  }
 </script>
 
 <style scoped>

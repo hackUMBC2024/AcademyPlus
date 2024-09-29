@@ -140,8 +140,11 @@ export default {
     },
     completeNode(index) {
       if (index === 0 || this.completedNodes[index - 1]) {
-        this.$set(this.completedNodes, index, true);
-      }
+    this.$set(this.completedNodes, index, true);
+    if (index < this.completedNodes.length - 1) {
+      this.$set(this.completedNodes, index + 1, true);
+    }
+  }
     },
   },
 };

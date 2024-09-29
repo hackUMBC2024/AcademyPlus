@@ -8,6 +8,7 @@
       </div>
       <div v-else>
         <p>@{{ username }}</p>
+        <a href="javascript:;" v-on:click="logOut">Logout</a>
       </div>
     </div>
     <div class="form-group">
@@ -18,24 +19,59 @@
         @keyup.enter="searchClicked"
       />
     </div>
+    <div>
+      <p id="version_tag">v{{ version }}</p>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useGlobalStore } from '@/stores/store';
+
 export default {
   data() {
+    let globalStore = useGlobalStore();
     return {
       searchQuery: '',
-      loggedIn: false,
-      username: "John"
+      loggedIn: globalStore.isLoggedIn,
+      username: globalStore.username,
+      version: globalStore.version
     };
   },
   methods: {
     searchClicked() {
       console.log("Search Clicked");
       this.$router.push({ path: '/map', query: { search: this.searchQuery } });
+    },
+    async logOut() {
+      console.log("Logged Out");
+
+      let fetchRespone = await fetch("/api/logout", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+      });
+
+      let response = await fetchRespone.json();
+
+      if(response.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
+        //Handle Error here figure it out 
+        return;
+      }
+
+      console.log("Success code:" + response.success);
+      console.log("Success content: " + response.content);
     }
   },
+  computed: {
+    ...mapStores(useGlobalStore)
+
+  }
 };
 </script>
 
@@ -56,6 +92,11 @@ h1 {
   top: 0;
   right: 0;
   margin: 10px;
+}
+
+#version_tag {
+  padding-left: 10px;
+  font-size: 10px;
 }
 
 input {

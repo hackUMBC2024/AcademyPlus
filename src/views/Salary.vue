@@ -11,11 +11,19 @@
 </template>
 
 <script>
-data() {
+import { mapStores } from 'pinia';
+import { useGlobalStore } from '@/stores/store';
+
+export default {
+  data() {
     return {
         
     };
+  },
+  computer: {
+    ...mapStores(useGlobalStore)
   }
+}
 </script>
 
 <style scoped>

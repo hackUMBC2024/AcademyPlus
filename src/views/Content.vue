@@ -1,28 +1,49 @@
 <template>
-    <div id="vertical-parent">
-        <div id="course-name">Linear Algebra</div>
-        <div id="parent">
-            <div id="table-of-content">
-                <h2>Table of Contents</h2>
-                <div class="contents-item" v-for="(item, index) in Array.from({length: 10}, (_, i) => i+1)" :key="index">
-                    Section {{ item }}
-                </div>
-            </div>
-            <div id="bar"></div>
-            <div id="content" v-html="markdownToHtml"></div>
+  <div id="vertical-parent">
+    <div id="course-name">Academy+</div>
+    <div id="parent">
+      <div id="table-of-content">
+        <h3 class="toc">Units: 10</h3>
+        <div
+          class="contents-item"
+          :class="{ highlighted: currentIndex === index }"
+          @click="highlight(index)"
+          v-for="(item, index) in contents"
+          :key="index"
+        >
+          {{ index + 1 }}. {{ item }}
+          <hr />
         </div>
+      </div>
+      <div id="bar"></div>
+      <div id="content" v-html="markdownToHtml"></div>
     </div>
+  </div>
 </template>
 
 <script>
-import { marked } from 'marked';
+import { marked } from "marked";
 import Katex from "katex";
 import extendedLatex from "marked-extended-latex";
 
 export default {
-    data() { 
-        //Data shoul come from pinia add a method to the global store thats fetches whatever is given from the search menu
-        return { markdown: String.raw`**Calculus II**
+  data() {
+    //Data should come from pinia add a method to the global store thats fetches whatever is given from the search menu
+    return {
+      currentIndex: null,
+      contents: [
+        "Introduction to Calculus II",
+        "Sequences and Series",
+        "Power Series",
+        "Taylor Series",
+        "Maclaurin Series",
+        "Improper Integrals",
+        "Linear Transformations",
+        "Differential Equations",
+        "Practice Problems",
+        "Conclusion",
+      ],
+      markdown: String.raw`**Calculus II**
 ================
 
 ### Introduction to Calculus II
@@ -122,37 +143,54 @@ In this course, we have explored several topics in advanced calculus, including 
 **Practice Problems**
 
 Note: These practice problems are intended to give you a sense of what to expect in the course, but they do not provide a comprehensive review or assessment of your knowledge.
-`.replace(/\$\$/g, '$') }
-    },
-    computed: {
-        markdownToHtml() {
-            const options = {
-                render: (formula , _displayMode) => {
-                    return Katex.renderToString(formula, { displayMode: true, output: 'mathml' });
-                }
-            };
+`.replace(/\$\$/g, "$"),
+    };
+  },
+  computed: {
+    markdownToHtml() {
+      const options = {
+        render: (formula, _displayMode) => {
+          return Katex.renderToString(formula, {
+            displayMode: true,
+            output: "mathml",
+          });
+        },
+      };
 
-            marked.use(extendedLatex(options))
-            return marked(this.markdown);
-        }
-    }
-}
+      marked.use(extendedLatex(options));
+      return marked(this.markdown);
+    },
+  },
+  methods: {
+    highlight(index) {
+      this.currentIndex = index;
+    },
+  },
+};
 </script>
 <style scoped>
 #vertical-parent {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: scroll;
+}
+.toc {
+  text-align: center;
+}
+
+hr {
+  width: 120%;
+  margin-left: -20px;
 }
 #course-name {
-    height: 20vw;
-    font-size: 24px;
-    text-transform: uppercase;
-    text-align: center;
-    font-weight: bold;
-    background-color: #D1E9F6;
-    color: black;
+  height: 20vw;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  background-color: #d1e9f6;
+  color: black;
 }
 #parent {
   display: flex;
@@ -164,7 +202,7 @@ Note: These practice problems are intended to give you a sense of what to expect
 }
 
 .katex-html {
-    color: red;
+  color: red;
 }
 
 #table-of-content {
@@ -174,37 +212,48 @@ Note: These practice problems are intended to give you a sense of what to expect
   flex-direction: column;
   gap: 4px;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
+  font-weight: bold;
 }
+
+.highlighted {
+  overflow: wrap;  
+  color: rgb(243, 255, 163);
+}
+
 #table-of-content h2 {
-    text-align: center;
-    margin-left: -7px;
-    text-transform: uppercase;
+  text-align: center;
+  text-transform: uppercase;
+  text-overflow:clip;
+  font-weight: bold;
 }
+
 #content {
   height: inherit;
   width: 80%;
   overflow-y: scroll;
   padding-left: 10px;
 }
+
 #bar {
-    background-color: black;
-    height: inherit;
-    width: 2%;
+  background-color: black;
+  height: inherit;
+  width: 0.2%;
 }
+
 .contents-item {
-    width: 100%;
-    background-color: gray;
-    padding: 14px 0;
-    padding-left: 12px;
-    text-align: left;
-    cursor: pointer;
-    font-size: 18px;
+  width: 100%;
+  padding: 14px 0;
+  padding-left: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 18px;
 }
 </style>
+
 <style>
 #app:has(#vertical-parent) {
-  padding: 1rem .5rem !important;
+  padding: 1rem 0.5rem !important;
   margin: 0 !important;
   overflow-x: hidden !important;
   overflow-y: hidden !important;

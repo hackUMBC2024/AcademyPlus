@@ -1,11 +1,12 @@
 <template>
     <div id="vertical-parent">
-        <div id="course-name">Linear Algebra</div>
+        <div id="course-name">Academy+</div>
         <div id="parent">
             <div id="table-of-content">
-                <h2>Table of Contents</h2>
+                <h3 class="toc">Table of Contents</h3>
                 <div class="contents-item" v-for="(item, index) in Array.from({length: 10}, (_, i) => i+1)" :key="index">
                     Section {{ item }}
+                    <hr>
                 </div>
             </div>
             <div id="bar"></div>
@@ -21,7 +22,7 @@ import extendedLatex from "marked-extended-latex";
 
 export default {
     data() { 
-        //Data shoul come from pinia add a method to the global store thats fetches whatever is given from the search menu
+        //Data should come from pinia add a method to the global store thats fetches whatever is given from the search menu
         return { markdown: String.raw`**Calculus II**
 ================
 
@@ -145,6 +146,14 @@ Note: These practice problems are intended to give you a sense of what to expect
     height: 100vh;
     overflow-y: hidden;
 }
+.toc {
+    text-align: center;
+}
+
+hr {
+    width:120%;
+    margin-left:-20px;
+}
 #course-name {
     height: 20vw;
     font-size: 24px;
@@ -194,7 +203,6 @@ Note: These practice problems are intended to give you a sense of what to expect
 }
 .contents-item {
     width: 100%;
-    background-color: gray;
     padding: 14px 0;
     padding-left: 12px;
     text-align: left;

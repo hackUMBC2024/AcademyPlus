@@ -100,6 +100,7 @@ export default {
       let title = this.contents[index];
 
       let global = useGlobalStore();
+
       const response = await fetch('/api/quiz', {
         method: 'POST',
         headers: {
@@ -118,6 +119,7 @@ export default {
       }
 
       //Do whatever here with the returned quiz
+      global.currentQuiz = json.content;
     }
   },
   mounted() {

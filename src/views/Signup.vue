@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <form @submit.prevent="handleLogin">
-      <h1 id="signin">Sign in</h1>
+      <h1 id="signin">Sign up</h1>
       <div class="form-group">
         <label for="username">Username</label>
         <input
@@ -23,7 +23,7 @@
       <div>
 
       </div>
-      <RouterLink to="/search"><button type="submit" >Login</button></RouterLink>
+      <RouterLink to="/search"><button type="submit" >Sign up</button></RouterLink>
     </form>
   </div>
 </template>
@@ -34,7 +34,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      
     }
   },
   methods: {
@@ -59,7 +60,7 @@ export default {
 
       console.log("Success code:" + response.success);
       console.log("Success content: " + response.content);
-    },
+    }
   }
 }
 </script>
@@ -98,6 +99,12 @@ label {
   display: block;
   margin-bottom: 5px;
   color: var(--color-text);
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10%;
 }
 
 input {

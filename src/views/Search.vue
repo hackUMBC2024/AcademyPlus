@@ -46,7 +46,7 @@ export default {
       console.log("Search Clicked");
       let search = this.searchQuery;
 
-      let fetchRespone = await ("/api/search", {
+      let fetchRespone = await fetch("/api/search", {
         method: "POST",
         headers: {
           Accept: "application/json",

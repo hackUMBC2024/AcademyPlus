@@ -129,7 +129,7 @@ Note: These practice problems are intended to give you a sense of what to expect
             const options = {
                 render: (formula , displayMode) => {
                     console.log(formula)
-                    return Katex.renderToString(formula, { displayMode: true });
+                    return Katex.renderToString(formula, { displayMode: true, output: 'mathml' });
                 }
             };
 

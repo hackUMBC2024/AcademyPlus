@@ -67,6 +67,7 @@ export default {
 
       let titles = JSON.parse(response.content);
       let globalStore = useGlobalStore();
+      globalStore.
 
       this.$router.push({ path: '/map', query: { search: this.searchQuery } });
     },

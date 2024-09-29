@@ -14,6 +14,9 @@
           {{ Number(index) + 1 }}. {{ item }}
           <hr />
         </div>
+        <div class="contents-item" @click="">
+          Quiz
+        </div>
       </div>
       <div id="bar"></div>
       <div v-if="currentIndex !== null && fetchedContent === ''" id="content" class="loading">Loading...</div>
@@ -92,6 +95,29 @@ export default {
       globalStore.currentPagesLoaded[index] = courseContent;
       this.fetchedContent = courseContent;
       return courseContent;
+    },
+    async getCourseQuiz() {
+      let title = this.contents[index];
+
+      let global = useGlobalStore();
+      const response = await fetch('/api/quiz', {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title })
+      });
+
+      const json = await response.json();
+
+      if (json.error) {
+        console.log('Error code: ' + response.error);
+        console.log('Error content: ' + response.content);
+        return;
+      }
+
+      //Do whatever here with the returned quiz
     }
   },
   mounted() {

@@ -38,9 +38,27 @@ export default {
     }
   },
   methods: {
-    handleLogin() {
-      console.log('Username:', this.username)
-      console.log('Password:', this.password)
+    async handleLogin() {
+      let fetchRespone = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Content-Type: "application/json"
+        },
+        body: JSON.stringify({username: this.username, password: this.password})
+      });
+
+      let response = await fetchRespone.json();
+
+      if(response.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
+        //Handle Error here figure it out 
+        return;
+      }
+
+      console.log("Success code:" + response.success);
+      console.log("Success content: " + response.content);
     }
   }
 }

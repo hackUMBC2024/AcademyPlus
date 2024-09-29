@@ -33,6 +33,7 @@ import { useGlobalStore } from '@/stores/store';
 export default {
   data() {
     let globalStore = useGlobalStore();
+
     return {
       searchQuery: '',
       loggedIn: globalStore.isLoggedIn,
@@ -41,8 +42,32 @@ export default {
     };
   },
   methods: {
-    searchClicked() {
+    async searchClicked() {
       console.log("Search Clicked");
+      let search = this.searchQuery;
+
+      let fetchRespone = await ("/api/search", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({searchTerm: search})
+      });
+
+      let response = await fetchRespone.json();
+
+      if(response.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
+        //Handle Error here figure it out 
+        return;
+      }
+
+
+      let titles = JSON.parse(response.content);
+      let globalStore = useGlobalStore();
+
       this.$router.push({ path: '/map', query: { search: this.searchQuery } });
     },
     async logOut() {

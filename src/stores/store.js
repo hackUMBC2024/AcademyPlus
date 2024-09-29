@@ -7,11 +7,17 @@ export const useGlobalStore = defineStore("global", {
             version: "1.1.0",
             isLoggedIn: true,
             username: "Greg",
+            currentTitles: []
         }
     },
     getters: {
         getVersion: (state) => {
             return state.version;
+        }
+    },
+    actions: {
+        setCurrentTitles(parsedTitles) {
+            this.currentTitles = parsedTitles;
         }
     }
 });

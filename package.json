@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "gsap": "^3.12.5",
+    "markdown-it-vue": "^1.1.7",
+    "marked": "^14.1.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.29"
   },

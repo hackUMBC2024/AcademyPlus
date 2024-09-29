@@ -2,38 +2,46 @@
   <div class="map">
     <h1>{{ searchQuery }}</h1>
     <div class="roadmap">
-      <div class="course-node" id="course1">
+      <router-link to="/content" class="course-node" id="course1">
         <div class="cube">
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-          <div class="face front"></div>
-          <div class="face back"></div>
+          <div class="face top" :class="{ gold: completedNodes[0] }"></div>
+          <div class="face bottom" :class="{ gold: completedNodes[0] }"></div>
+          <div class="face front" :class="{ gold: completedNodes[0] }"></div>
+          <div class="face back" :class="{ gold: completedNodes[0] }"></div>
+        </div>
+      </router-link>
+      <div class="course-node" id="course2" @click="completeNode(1)">
+        <div class="cube">
+          <div class="face top " :class="{ gold: completedNodes[1] }"></div>
+          <div class="face bottom" :class="{ gold: completedNodes[1] }"></div>
+          <div class="face front" :class="{ gold: completedNodes[1] }"></div>
+          <div class="face back" :class="{ gold: completedNodes[1] }"></div>
         </div>
       </div>
-      <div class="course-node" id="course2">        <div class="cube">
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-          <div class="face front"></div>
-          <div class="face back"></div>
-        </div></div>
-      <div class="course-node" id="course3">        <div class="cube">
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-          <div class="face front"></div>
-          <div class="face back"></div>
-        </div></div>
-      <div class="course-node" id="course4">        <div class="cube">
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-          <div class="face front"></div>
-          <div class="face back"></div>
-        </div></div>
-      <div class="course-node" id="course5">        <div class="cube">
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-          <div class="face front"></div>
-          <div class="face back"></div>
-        </div></div>
+      <div class="course-node" id="course3" @click="completeNode(2)">
+        <div class="cube" :class="{ gold: completedNodes[2] }">
+          <div class="face top" :class="{ gold: completedNodes[2] }"></div>
+          <div class="face bottom" :class="{ gold: completedNodes[2] }"></div>
+          <div class="face front" :class="{ gold: completedNodes[2] }"></div>
+          <div class="face back" :class="{ gold: completedNodes[2] }"></div>
+        </div>
+      </div>
+      <div class="course-node" id="course4" @click="completeNode(3)">
+        <div class="cube" :class="{ gold: completedNodes[3] }">
+          <div class="face top" :class="{ gold: completedNodes[3] }"></div>
+          <div class="face bottom" :class="{ gold: completedNodes[3] }"></div>
+          <div class="face front" :class="{ gold: completedNodes[3] }"></div>
+          <div class="face back" :class="{ gold: completedNodes[3] }"></div>
+        </div>
+      </div>
+      <div class="course-node" id="course5" @click="completeNode(4)">
+        <div class="cube" :class="{ gold: completedNodes[4] }">
+          <div class="face top" :class="{ gold: completedNodes[4] }"></div>
+          <div class="face bottom" :class="{ gold: completedNodes[4] }"></div>
+          <div class="face front" :class="{ gold: completedNodes[4] }"></div>
+          <div class="face back" :class="{ gold: completedNodes[4] }"></div>
+        </div>
+      </div>
       <svg class="connections">
         <line id="line1"></line>
         <line id="line2"></line>
@@ -51,6 +59,7 @@ export default {
   data() {
     return {
       searchQuery: "",
+      completedNodes: [true, false, false, false, false],
     };
   },
   mounted() {
@@ -104,57 +113,56 @@ export default {
         gsap.to(line, {
           strokeDashoffset: 0,
           duration: 0.5,
-          delay: index * 0.2,
+          delay: index * 0.35,
           ease: "power2.inOut",
         });
       });
     },
     animateNodes() {
-    gsap.from(".course-node", {
-      duration: 0.5,
-      scale: 0,
-      opacity: 0,
-      y: 20,
-      stagger: 0.1,
-      ease: "bounce.out",
-    });
-  },
+      gsap.from(".course-node", {
+        duration: 1,
+        scale: 0,
+        opacity: 0,
+        y: 20,
+        stagger: 0.22,
+      });
+    },
     setupNodeClick() {
       document.querySelectorAll(".course-node").forEach((node) => {
         node.addEventListener("click", () => {
           gsap.to(node, {
-            duration: 0.5,
+            duration: 1,
             scale: 1.1,
-            ease: "bounce.out",
-            yoyo: true,
             repeat: 1,
           });
         });
       });
+    },
+    completeNode(index) {
+      if (index === 0 || this.completedNodes[index - 1]) {
+        this.$set(this.completedNodes, index, true);
+      }
     },
   },
 };
 </script>
 
 <style>
-.map {
+.roadmap {
   position: relative;
   height: 700px;
   width: 500px;
+  margin-top: -150px;
+  margin-right: 100px;
 }
 
 .course-node {
   width: 80px;
   height: 80px;
-  background-color: #4a90e2;
-  color: white;
   text-align: center;
   line-height: 80px;
   border-radius: 10px;
   position: absolute;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3),
-    -3px -3px 5px rgba(255, 255, 255, 0.3);
-  border: 1px solid #ccc;
   perspective: 500px;
   margin: 100px;
 }
@@ -176,7 +184,7 @@ export default {
 }
 #course5 {
   top: 650px;
-  left: 200px;
+  left: 300px;
 }
 
 .connections {
@@ -194,20 +202,17 @@ export default {
 }
 
 .cube {
-  position: relative;
+  margin-top: -100px;
   transform-style: preserve-3d;
-  transform-origin: center;
-  transform: rotateX(-45deg) rotateY(-45deg);
+  transform: rotateX(-30deg) rotateY(-45deg);
 }
-
 
 .face {
   width: 100px;
   height: 100px;
-  background: skyblue;
+  background: rgb(33, 33, 33);
   border: 2px solid black;
   position: absolute;
-  opacity: 0.9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,9 +246,32 @@ export default {
   transform: rotateX(-90deg) translateZ(50px) translateX(0px) translateY(-100px);
 }
 
+#course1 .cube {
+  margin-left: 50px;
+}
+#course2 .cube {
+  margin-left: 50px;
+}
+
+#course3 .cube {
+  margin-left: 50px;
+}
+
+#course4 .cube {
+  margin-left: 50px;
+}
+
+#course5 .cube {
+  margin-top: -150px;
+}
+
 h1 {
   color: var(--color-heading);
   text-align: center;
   margin-top: -100px;
+}
+
+.gold {
+  background-color: gold;
 }
 </style>

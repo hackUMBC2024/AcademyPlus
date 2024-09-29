@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    async handleLogin() {
+    async signUp() {
       let fetchRespone = await fetch("/api/login", {
         method: "POST",
         headers: {

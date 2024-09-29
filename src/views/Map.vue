@@ -148,6 +148,7 @@ export default {
 </script>
 
 <style>
+/*Need to update all of these to be responsive, but for the purposes of this demo it will be okay */
 .roadmap {
   position: relative;
   height: 700px;
@@ -166,6 +167,7 @@ export default {
   perspective: 500px;
   margin: 100px;
 }
+
 #course1 {
   top: 100px;
   left: 200px;

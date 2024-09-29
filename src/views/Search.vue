@@ -11,6 +11,7 @@
         <a href="javascript:;" v-on:click="logOut">Logout</a>
       </div>
     </div>
+    <img src="/academywhite.png" height="150"></img>
     <div class="form-group">
       <input
         placeholder="Intro to Javascript...."
@@ -76,6 +77,9 @@ export default {
 </script>
 
 <style>
+img {
+  margin-left:9rem;
+}
 #signin {
   text-align: left;
   justify-content: left;

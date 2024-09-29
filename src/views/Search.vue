@@ -57,6 +57,8 @@ export default {
 
       let response = await fetchRespone.json();
 
+      console.log(response);
+
       if(response.error) {
         console.log("Error code: " + response.error);
         console.log("Error content: " + response.content);
@@ -67,9 +69,26 @@ export default {
 
       let titles = JSON.parse(response.content);
       let globalStore = useGlobalStore();
-      globalStore.
+      globalStore.currentTitles = titles;
 
-      this.$router.push({ path: '/map', query: { search: this.searchQuery } });
+
+      //Fetch username
+      let userFetchRespone = await fetch("/api/userdata");
+      let responseSecond = await userFetchRespone.json();
+      
+      console.log(responseSecond);
+
+      if(responseSecond.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
+        //Handle Error here figure it out 
+        return;
+      }
+
+      globalStore.username = responseSecond.username;
+
+
+      this.$router.push({ path: '/search', query: { search: this.searchQuery } });
     },
     async logOut() {
       console.log("Logged Out");

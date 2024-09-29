@@ -23,13 +23,12 @@
       <div>
 
       </div>
-      <RouterLink to="/search"><button type="submit" >Login</button></RouterLink>
+      <button type="submit" @click="handleLogin">Login</button>
     </form>
   </div>
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
 export default {
   data() {
     return {
@@ -53,12 +52,15 @@ export default {
       if(response.error) {
         console.log("Error code: " + response.error);
         console.log("Error content: " + response.content);
-        //Handle Error here figure it out 
+        //Handle Error here figure it out
         return;
       }
 
+
       console.log("Success code:" + response.success);
       console.log("Success content: " + response.content);
+
+      this.$router.push({ path: "/", query: { search: this.searchQuery } });
     },
   }
 }

@@ -3,7 +3,7 @@
     <div id="course-name">Academy+</div>
     <div id="parent">
       <div id="table-of-content">
-        <h3 class="toc">Units: 10</h3>
+        <h3 class="toc">Table of Contents</h3>
         <div
           class="contents-item"
           :class="{ highlighted: currentIndex === index }"
@@ -16,7 +16,8 @@
         </div>
       </div>
       <div id="bar"></div>
-      <div id="content" v-html="markdownToHtml"></div>
+      <div v-if="currentIndex !== null && fetchedContent === ''" id="content" class="loading">Loading...</div>
+      <div v-else id="content" v-html="markdownToHtml"></div>
     </div>
   </div>
 </template>
@@ -26,6 +27,8 @@ import { marked } from "marked";
 import Katex from "katex";
 import extendedLatex from "marked-extended-latex";
 import { useGlobalStore } from '@/stores/store';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 export default {
   data() {
     let globalStore = useGlobalStore();
@@ -179,6 +182,11 @@ hr {
   text-align: left;
   cursor: pointer;
   font-size: 16px;
+}
+.loading {
+  font-weight: bold;
+  font-size: 36px;
+  font-style: italic;
 }
 </style>
 

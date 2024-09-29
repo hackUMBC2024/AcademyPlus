@@ -24,6 +24,7 @@
     <div>
       <p id="version_tag">v{{ version }}</p>
     </div>
+    <div v-if="submittedInput">Loading...</div>
   </div>
 </template>
 
@@ -31,7 +32,7 @@
 import { mapStores } from 'pinia';
 import { useGlobalStore } from '@/stores/store';
 
-export default {
+export default {  
   data() {
     let globalStore = useGlobalStore();
 
@@ -39,14 +40,15 @@ export default {
       searchQuery: '',
       loggedIn: globalStore.isLoggedIn,
       username: globalStore.username,
-      version: globalStore.version
+      version: globalStore.version,
+      submittedInput: false
     };
   },
   methods: {
     async searchClicked() {
       console.log("Search Clicked");
       let search = this.searchQuery;
-
+      this.submittedInput = true;
       let fetchRespone = await fetch("/api/search", {
         method: "POST",
         headers: {

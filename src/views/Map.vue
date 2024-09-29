@@ -1,10 +1,10 @@
 <template>
   <div class="map">
-    <h1>{{ searchQuery }}</h1>
+    <h1 id="search-query">{{ searchQuery }}</h1>
     <div class="roadmap">
       <router-link to="/content" class="course-node" id="course1">
         <div class="cube">
-          <div class="face top" :class="{ gold: completedNodes[0] }"></div>
+          <div class="face top" :class="{ gold: completedNodes[0] }" id="start-cube">Start</div>
           <div class="face bottom" :class="{ gold: completedNodes[0] }"></div>
           <div class="face front" :class="{ gold: completedNodes[0] }"></div>
           <div class="face back" :class="{ gold: completedNodes[0] }"></div>
@@ -149,6 +149,12 @@ export default {
 
 <style>
 /*Need to update all of these to be responsive, but for the purposes of this demo it will be okay */
+#start-cube {
+  text-transform: uppercase;
+}
+#search-query {
+  text-transform: capitalize;
+}
 .roadmap {
   position: relative;
   height: 700px;

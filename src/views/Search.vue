@@ -6,13 +6,14 @@
         or
         <RouterLink to="/signup">sign up</RouterLink>
       </div>
-      <div v-else>
-        <p>@{{ username }}</p>
-        <a href="javascript:;" v-on:click="logOut">Logout</a>
+      <div v-else :style="{ 'display': 'block ruby' }">
+        <p :style="{ 'margin-right': '15px' }">@{{ username }}</p>
+        <a href="javascript:;" v-on:click="logOut">LOGOUT</a>
       </div>
     </div>
-    <img src="/academywhite.png" height="150"></img>
+    <img src="/academywhite.png" height="150">
     <div class="form-group">
+      <p :style="{ 'margin': '0', 'margin-left': '4px', 'margin-bottom': '8px', 'font-family': 'initial' }">Press enter to search...</p>
       <input
         placeholder="Intro to Javascript...."
         v-model="searchQuery"
@@ -70,6 +71,10 @@ export default {
       let titles = JSON.parse(response.content);
       let globalStore = useGlobalStore();
       globalStore.currentTitles = titles;
+      globalStore.currentSearchQuery = search;
+      
+      console.log('titles global store', globalStore.currentTitles);
+      console.log('search global store', globalStore.currentSearchQuery);
 
 
       //Fetch username
@@ -88,7 +93,7 @@ export default {
       globalStore.username = responseSecond.username;
 
 
-      this.$router.push({ path: '/search', query: { search: this.searchQuery } });
+      this.$router.push({ path: '/map', query: { search: this.searchQuery } });
     },
     async logOut() {
       console.log("Logged Out");

@@ -9,6 +9,7 @@
           id="username"
           v-model="username"
           required
+          autocomplete="off"
         />
       </div>
       <div class="form-group">
@@ -18,6 +19,7 @@
           id="password"
           v-model="password"
           required
+          autocomplete="off"
         />
       </div>
       <div>

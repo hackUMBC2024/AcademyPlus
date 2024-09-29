@@ -7,7 +7,9 @@ export const useGlobalStore = defineStore("global", {
             version: "1.1.0",
             isLoggedIn: false,
             username: "Test",
-            currentTitles: []
+            currentTitles: [],
+            currentSearchQuery: "",
+            currentPagesLoaded: []
         }
     },
     getters: {

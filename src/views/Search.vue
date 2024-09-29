@@ -7,7 +7,7 @@
         <RouterLink to="/signup">sign up</RouterLink>
       </div>
       <div v-else>
-        <p>@john</p>
+        <p>@{{ username }}</p>
       </div>
     </div>
     <div class="form-group">
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       searchQuery: '',
-      loggedIn: true,
+      loggedIn: false,
+      username: "John"
     };
   },
   methods: {

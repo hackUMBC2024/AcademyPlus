@@ -174,6 +174,7 @@ Note: These practice problems are intended to give you a sense of what to expect
   flex-direction: column;
   height: 100vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .toc {
   text-align: center;
@@ -212,7 +213,7 @@ hr {
   flex-direction: column;
   gap: 4px;
   overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-x: hidden;
   font-weight: bold;
 }
 
@@ -244,7 +245,7 @@ hr {
 .contents-item {
   width: 100%;
   padding: 14px 0;
-  padding-left: 12px;
+  padding-left: 6px;
   text-align: left;
   cursor: pointer;
   font-size: 18px;

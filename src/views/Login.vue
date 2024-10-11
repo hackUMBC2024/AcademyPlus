@@ -9,6 +9,7 @@
           id="username"
           v-model="username"
           required
+          autocomplete="off"
         />
       </div>
       <div class="form-group">
@@ -18,18 +19,21 @@
           id="password"
           v-model="password"
           required
+          autocomplete="off"
         />
       </div>
       <div>
 
       </div>
-      <RouterLink to="/search"><button type="submit" >Login</button></RouterLink>
+      <button type="submit" @click="handleLogin">Login</button>
     </form>
   </div>
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
+import { mapStores } from "pinia";
+import { useGlobalStore } from "@/stores/store";
+
 export default {
   data() {
     return {
@@ -53,13 +57,43 @@ export default {
       if(response.error) {
         console.log("Error code: " + response.error);
         console.log("Error content: " + response.content);
+
+        if(response.content == "Already logged in") {
+          this.$router.push({ path: "/search"});
+        }
+        //Handle Error here figure it out
+        return;
+      }
+
+      
+      console.log("Success code:" + response.success);
+      console.log("Success content: " + response.content);
+
+      console.log(response);
+
+      let global = useGlobalStore();
+      global.username = response.username;
+      global.isLoggedIn = true;
+
+      let userFetchRespone = await fetch("/api/userdata");
+      let responseSecond = await userFetchRespone.json();
+      
+      console.log(responseSecond);
+
+      if(responseSecond.error) {
+        console.log("Error code: " + response.error);
+        console.log("Error content: " + response.content);
         //Handle Error here figure it out 
         return;
       }
 
-      console.log("Success code:" + response.success);
-      console.log("Success content: " + response.content);
+      global.username = responseSecond.username;
+
+      this.$router.push({ path: "/search"});
     },
+  },
+  computed: {
+    ...mapStores(useGlobalStore)
   }
 }
 </script>
